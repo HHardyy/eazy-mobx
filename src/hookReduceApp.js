@@ -1,5 +1,4 @@
 import React, { useState, useContext, createContext } from 'react'
-import { observer } from 'mobx-react'
 import ReducerDemo from './testUseReducer/index'
 
 let CountContext = createContext()
@@ -30,13 +29,11 @@ function Count(){
   )
 }
 
-const App = observer(({ appData }) => (
+const ReduceApp = () =>(
   <div>
 	  <Count/>
 	  <hr/>
-	  <p>{appData.timer}</p>
-	  <button onClick={appData.resetTimer}>重置</button>
   </div>
-))
+)
 
-export default App
+export default ReduceApp
