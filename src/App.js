@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useContext, createContext } from 'react'
+import { observer } from 'mobx-react'
+import ReducerDemo from './testUseReducer/index'
 
-function App() {
+let CountContext = createContext()
+
+
+function Child(){
+  let count = useContext(CountContext)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <div>child:{count}</div>
+  )
 }
 
-export default App;
+function Count(){
+  let [count, setCount] = useState(0)
+  return (
+    <div>
+       <ReducerDemo/>
+
+       <hr/>
+
+       <div>当前数量为：{count}</div>
+       <button onClick={()=>{setCount(count+1)}}>+</button>
+
+       <CountContext.Provider value={count}>
+         <Child />
+       </CountContext.Provider>
+    </div>
+  )
+}
+
+const App = observer(({ appData }) => (
+  <div>
+	  <Count/>
+	  <hr/>
+	  <p>{appData.timer}</p>
+	  <button onClick={appData.resetTimer}>重置</button>
+  </div>
+))
+
+export default App
